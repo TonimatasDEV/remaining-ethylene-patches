@@ -1,0 +1,23 @@
+--- a/net/minecraft/world/inventory/AbstractCraftingMenu.java
++++ b/net/minecraft/world/inventory/AbstractCraftingMenu.java
+@@ -13,14 +13,17 @@
+ 
+     private final int width;
+     private final int height;
+-    public final InventoryCrafting craftSlots;
++    public final TransientCraftingContainer craftSlots; // CraftBukkit
+     public final InventoryCraftResult resultSlots = new InventoryCraftResult();
+ 
+-    public AbstractCraftingMenu(Containers<?> containers, int i, int j, int k) {
++    public AbstractCraftingMenu(Containers<?> containers, int i, int j, int k, PlayerInventory playerInventory) { // CraftBukkit
+         super(containers, i);
+         this.width = j;
+         this.height = k;
+-        this.craftSlots = new TransientCraftingContainer(this, j, k);
++        // CraftBukkit start
++        this.craftSlots = new TransientCraftingContainer(this, j, k, playerInventory.player); // CraftBukkit - pass player
++        this.craftSlots.resultInventory = this.resultSlots; // CraftBukkit - let InventoryCrafting know about its result slot
++        // CraftBukkit end
+     }
+ 
+     protected Slot addResultSlot(EntityHuman entityhuman, int i, int j) {

@@ -1,0 +1,23 @@
+--- a/net/minecraft/world/entity/ConversionType.java
++++ b/net/minecraft/world/entity/ConversionType.java
+@@ -12,6 +12,11 @@
+ import net.minecraft.world.item.ItemStack;
+ import net.minecraft.world.scores.Scoreboard;
+ 
++// CraftBukkit start
++import net.minecraft.core.BlockPosition;
++import org.bukkit.event.entity.EntityRemoveEvent;
++// CraftBukkit end
++
+ public enum ConversionType {
+ 
+     SINGLE(true) {
+@@ -31,7 +36,7 @@
+                 while (iterator.hasNext()) {
+                     entity1 = (Entity) iterator.next();
+                     entity1.stopRiding();
+-                    entity1.remove(Entity.RemovalReason.DISCARDED);
++                    entity1.remove(Entity.RemovalReason.DISCARDED, EntityRemoveEvent.Cause.TRANSFORMATION); // CraftBukkit - add Bukkit remove cause
+                 }
+ 
+                 entity.startRiding(entityinsentient1);
